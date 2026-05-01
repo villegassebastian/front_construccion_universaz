@@ -1,26 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@200;300;400;500&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: black;
+  color: white;
+}
+
+/* Fuentes personalizadas */
+.font-display {
+  font-family: 'Syne', sans-serif;
+}
+
+.font-body {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* ============================================
+   EFECTOS NEÓN PARA TEXTOS
+   ============================================ */
+
+/* Efecto neón para el texto rojo (intenso) */
+.neon-red {
+  text-shadow: 
+    0 0 5px #FF2A24,
+    0 0 10px #FF2A24,
+    0 0 20px #FF2A24,
+    0 0 40px #FF2A24,
+    0 0 80px rgba(255,42,36,0.5);
+  animation: neonPulse 1.5s ease-in-out infinite alternate;
+}
+
+/* Efecto neón para texto blanco (sutil) */
+.neon-white {
+  text-shadow: 
+    0 0 5px rgba(255,255,255,0.3),
+    0 0 10px rgba(255,255,255,0.2),
+    0 0 20px rgba(255,255,255,0.1);
+}
+
+/* Luz roja difusa detrás del texto */
+.slide-glow {
+  position: relative;
+}
+
+.slide-glow::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,42,36,0.35) 0%, rgba(255,42,36,0.15) 40%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+/* Luz roja para el título principal */
+.hero-glow {
+  text-shadow: 
+    0 0 10px rgba(255,42,36,0.8),
+    0 0 20px rgba(255,42,36,0.5),
+    0 0 40px rgba(255,42,36,0.3);
+}
+
+/* Luz roja para el texto tachado */
+.strike-glow {
+  text-shadow: 
+    0 0 8px rgba(255,42,36,0.9),
+    0 0 16px rgba(255,42,36,0.6),
+    0 0 32px rgba(255,42,36,0.3);
+}
+
+/* Animación de pulso para el neón */
+@keyframes neonPulse {
+  0% {
+    text-shadow: 
+      0 0 5px #FF2A24,
+      0 0 10px #FF2A24,
+      0 0 20px #FF2A24,
+      0 0 40px rgba(255,42,36,0.8);
+  }
+  100% {
+    text-shadow: 
+      0 0 8px #FF2A24,
+      0 0 16px #FF2A24,
+      0 0 32px #FF2A24,
+      0 0 64px rgba(255,42,36,0.6);
+  }
+}
+
+/* Animaciones */
+@keyframes shine {
+  100% { transform: translateX(100%); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { 
+    box-shadow: rgba(225,6,0,0.55) 0px 0px 12px, rgba(225,6,0,0.35) 0px 0px 30px; 
+  }
+  50% { 
+    box-shadow: rgba(225,6,0,0.8) 0px 0px 18px, rgba(225,6,0,0.5) 0px 0px 40px; 
+  }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes floatParticle {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  10% { opacity: var(--op, 0.4); }
+  90% { opacity: var(--op, 0.4); }
+  100% { transform: translate3d(var(--dx, 0px), -120vh, 0); opacity: 0; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+/* Clases de utilidad */
+.animate-shine {
+  animation: shine 1.5s infinite;
+}
+
+.animate-pulseGlow {
+  animation: pulseGlow 1.5s ease-in-out infinite;
+}
+
+.animate-floatY {
+  animation: floatY 3s ease-in-out infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+/* Efecto de brillo para la barra de progreso */
+.progress-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transform: translateX(-100%);
+  animation: shine 1.5s infinite;
+}
+
+/* Propiedades personalizadas para animaciones de partículas */
+@property --dx {
+  syntax: '<length-percentage>';
+  initial-value: 0px;
+  inherits: false;
+}
+
+@property --op {
+  syntax: '<number>';
+  initial-value: 0.4;
+  inherits: false;
+}
+
+@keyframes neonPulse {
+  0% {
+    text-shadow: 0 0 5px #FF2A24, 0 0 10px #FF2A24, 0 0 20px #FF2A24, 0 0 40px rgba(255,42,36,0.8);
+  }
+  100% {
+    text-shadow: 0 0 10px #FF2A24, 0 0 20px #FF2A24, 0 0 40px #FF2A24, 0 0 80px rgba(255,42,36,0.6);
+  }
 }
